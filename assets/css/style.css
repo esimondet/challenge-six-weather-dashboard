@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+header {
+    background: rgb(63,81,209);
+    background: linear-gradient(90deg, rgba(63,81,209,1) 5%, rgba(26,9,121,1) 45%, rgba(31,24,92,1) 67%);
+    padding-top: 5px;
+    height: 50px;
+}
+
+h2 {
+    font-weight: bold;
+    color: black;
+    font-size: xx-large;
+}
+
+button {
+    width: 100%;
+}
+
+.space {
+    margin-bottom: 15px;
+}
+
+hr {
+    background-color: grey;
+    height: 3px;
+    margin-top: 5px;
+}
+
+.current-day {
+    border: 1px solid black;
+    padding: 5px;
+    color: black;
+}
+
+h4 {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+}
