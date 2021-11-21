@@ -5,43 +5,39 @@ var cityStore = {
 var apiKey = "262802462fdd4f377221639cb1e44654";
 
 var loadPage = function () {
-    var cityStore = localStorage.getItem("cities");
-    if (cityStore != null) {
-        cityStore = JSON.parse(cityStore);
+    var citiesFromLocalStorage = localStorage.getItem("cities");
+    if (citiesFromLocalStorage != null) {
+        cityStore = JSON.parse(citiesFromLocalStorage);
 
+        $("#cityStore").html("");
 
-        for (let i = 0; i < cityStore.length; i++) {
-
-            var cityLi = $("<li class='space box'>");
-            cityLi.attr("id", "city" + [i]);
-            cityLi.html("#cityName").val();
+        for (let i = 0; i < cityStore.city.length; i++) {
+            var cityLi = $("<li class='box history-city'>");
+            cityLi.html(cityStore.city[i]);
             $("#cityStore").append(cityLi);
         }
     }
-
 }
 
-var weatherList = {
-    "weather": []
-}
+const weather = null;
 
 var populateWeather = function () {
     var cityDiv = $("#currentLocation");
-    cityDiv.html($("#cityName").val().toUpperCase() + " (" + moment(weatherList.weather.currentDate).format('L') + ") " + '<img src="' + weatherList.weather[0].currentIcon + '">');
+    cityDiv.html($("#cityName").val().toUpperCase() + " (" + moment(currentWeather.currentDate).format('L') + ") " + '<img src="' + currentWeather.currentIcon + '">');
 
-    $("#cityTemp").html("Temp: " + weatherList.weather[0].currentTemp + '°F');
-    $("#cityWind").html("Wind: " + weatherList.weather[0].currentWind + ' MPH');
-    $("#cityHumid").html("Humidity: " + weatherList.weather[0].currentHumid + ' %');
-    $("#cityUvi").html("UV Index: " + weatherList.weather[0].currentUvi);
+    $("#cityTemp").html("Temp: " + currentWeather.currentTemp + '°F');
+    $("#cityWind").html("Wind: " + currentWeather.currentWind + ' MPH');
+    $("#cityHumid").html("Humidity: " + currentWeather.currentHumid + ' %');
+    $("#cityUvi").html("UV Index: " + currentWeather.currentUvi);
 
     var numbers = ['One', 'Two', 'Three', 'Four', 'Five'];
 
     for (var i = 0; i < 5; i++) {
-        $("#forecast"+ numbers[i] + "Date").html(moment(weatherList.weather[0].forecast[i].date).format('L'));
-        $("#forecast"+ numbers[i] + "Icon").html('<img src="' + weatherList.weather[0].forecast[i].icon + '">');
-        $("#forecast"+ numbers[i] + "Temp").html("Temp: " + weatherList.weather[0].forecast[i].temp + '°F');
-        $("#forecast"+ numbers[i] + "Wind").html("Wind: " + weatherList.weather[0].forecast[i].wind + ' MPH');
-        $("#forecast"+ numbers[i] + "Humid").html("Humidity: " + weatherList.weather[0].forecast[i].humid + ' %');
+        $("#forecast" + numbers[i] + "Date").html(moment(currentWeather.forecast[i].date).format('L'));
+        $("#forecast" + numbers[i] + "Icon").html('<img src="' + currentWeather.forecast[i].icon + '">');
+        $("#forecast" + numbers[i] + "Temp").html("Temp: " + currentWeather.forecast[i].temp + '°F');
+        $("#forecast" + numbers[i] + "Wind").html("Wind: " + currentWeather.forecast[i].wind + ' MPH');
+        $("#forecast" + numbers[i] + "Humid").html("Humidity: " + currentWeather.forecast[i].humid + ' %');
     }
 }
 
@@ -100,13 +96,22 @@ var getWeather = function () {
                 "humid": onecall.daily[5].humidity
             }]
         }
-        weatherList.weather.push(weather);
+        currentWeather = weather;
         populateWeather();
     })
 };
 
 $(document).on("click", "button", function () {
-    cityStore = $("#cityName").val().toUpperCase();
+    cityStore.city.push($("#cityName").val().toUpperCase());
+    getWeather();
+    //update local storage with city store object
+    localStorage.setItem("cities", JSON.stringify(cityStore));
+    loadPage();
+
+});
+
+$(document).on("click", ".history-city", function () {
+    $("#cityName").val($(this).text());
     getWeather();
 });
 
