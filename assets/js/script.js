@@ -27,8 +27,16 @@ var populateWeather = function () {
 
     $("#cityTemp").html("Temp: " + currentWeather.currentTemp + '°F');
     $("#cityWind").html("Wind: " + currentWeather.currentWind + ' MPH');
-    $("#cityHumid").html("Humidity: " + currentWeather.currentHumid + ' %');
+    $("#cityHumid").html("Humidity: " + currentWeather.currentHumid + '%');
     $("#cityUvi").html("UV Index: " + currentWeather.currentUvi);
+
+    if (currentWeather.currentUvi < 3) {
+        $("#cityUvi").addClass("uvi-green");
+    } else if (currentWeather.currentUvi >= 3 && currentWeather.currentUvi < 6) {
+        $("#cityUvi").addClass("uvi-orange");
+    } else {
+        $("#cityUvi").addClass("uvi-red");
+    }
 
     var numbers = ['One', 'Two', 'Three', 'Four', 'Five'];
 
