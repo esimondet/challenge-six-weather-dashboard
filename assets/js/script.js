@@ -23,7 +23,7 @@ const weather = null;
 
 var populateWeather = function () {
     var cityDiv = $("#currentLocation");
-    cityDiv.html($("#cityName").val().toUpperCase() + " (" + moment(currentWeather.currentDate).format('L') + ") " + '<img src="' + currentWeather.currentIcon + '">');
+    cityDiv.html($("#cityName").val().toUpperCase() + " (" + moment().format('L') + ") " + '<img src="' + currentWeather.currentIcon + '">');
 
     $("#cityTemp").html("Temp: " + currentWeather.currentTemp + '°F');
     $("#cityWind").html("Wind: " + currentWeather.currentWind + ' MPH');
@@ -33,7 +33,7 @@ var populateWeather = function () {
     var numbers = ['One', 'Two', 'Three', 'Four', 'Five'];
 
     for (var i = 0; i < 5; i++) {
-        $("#forecast" + numbers[i] + "Date").html(moment(currentWeather.forecast[i].date).format('L'));
+        $("#forecast" + numbers[i] + "Date").html(moment().add(i+1, 'days').format('L'));
         $("#forecast" + numbers[i] + "Icon").html('<img src="' + currentWeather.forecast[i].icon + '">');
         $("#forecast" + numbers[i] + "Temp").html("Temp: " + currentWeather.forecast[i].temp + '°F');
         $("#forecast" + numbers[i] + "Wind").html("Wind: " + currentWeather.forecast[i].wind + ' MPH');
